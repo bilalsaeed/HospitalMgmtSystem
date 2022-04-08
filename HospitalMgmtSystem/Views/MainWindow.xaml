@@ -1,0 +1,86 @@
+﻿<Window x:Class="HospitalMgmtSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalMgmtSystem"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        xmlns:viewmodels="clr-namespace:HospitalMgmtSystem.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:HospitalMgmtSystem.Views" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:BaseViewModel}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBodyLight}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        SizeToContent="WidthAndHeight"
+        Title="Hospital Management System" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:PreLoginViewModel}">
+            <views:PreLogin/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:AdminLoginViewModel}">
+            <views:AdminLoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:UserRegistrationViewModel}">
+            <views:UserRegistration />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
+            <views:Dashboard />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:PatientsViewModel}">
+            <views:Patients />
+        </DataTemplate>
+    </Window.Resources>
+    <materialDesign:DialogHost Name="RootDialog" Identifier="RootDialog" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid>
+
+            <Grid  Visibility="{Binding NonAuthenticatedViews}">
+                <ContentControl Content="{Binding CurrentViewModel}"/>
+            </Grid>
+            <Grid Visibility="{Binding AuthenticatedViews}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Name="LogoPanel" Background="{StaticResource PrimaryColor}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1">
+                    <Image Source="../images/logo.png"></Image>
+                </DockPanel>
+                <DockPanel Name="SideMenu" LastChildFill="False" Background="{StaticResource PrimaryColor}" Grid.Row="1" Grid.Column="0" Grid.RowSpan="9">
+                    <ListView x:Name="ListViewMenu" DockPanel.Dock="Top" Margin="0 15 0 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToPatientsView" >
+                            Patients
+                        </ListViewItem>
+                        <ListViewItem Style="{StaticResource NavButton}" >
+                            Admins
+                        </ListViewItem>
+                        <ListViewItem Style="{StaticResource NavButton}" >
+                            Doctors
+                        </ListViewItem>
+                        <ListViewItem Style="{StaticResource NavButton}" >
+                            Appointments
+                        </ListViewItem>
+                        <ListViewItem Style="{StaticResource NavButton}" >
+                            Profile
+                        </ListViewItem>
+                    </ListView>
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button ToolTip="Logout" Command="{Binding LogoutCommand}" VerticalAlignment="Center" Style="{StaticResource SettingsButton}">
+                            <materialDesign:PackIcon Kind="LogoutVariant" Height="25" Width="25" />
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+                <ContentControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="10" Content="{Binding CurrentViewModel}"/>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+
+</Window>
