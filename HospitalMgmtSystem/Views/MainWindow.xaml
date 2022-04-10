@@ -36,6 +36,12 @@
         <DataTemplate DataType="{x:Type viewmodels:PatientsViewModel}">
             <views:Patients />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:AdminsViewModel}">
+            <views:Admins />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:DoctorsViewModel}">
+            <views:Doctors />
+        </DataTemplate>
     </Window.Resources>
     <materialDesign:DialogHost Name="RootDialog" Identifier="RootDialog" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid>
@@ -60,17 +66,17 @@
                         <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToPatientsView" >
                             Patients
                         </ListViewItem>
-                        <ListViewItem Style="{StaticResource NavButton}" >
+                        <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToAdminsView">
                             Admins
                         </ListViewItem>
-                        <ListViewItem Style="{StaticResource NavButton}" >
+                        <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToDoctorsView">
                             Doctors
                         </ListViewItem>
                         <ListViewItem Style="{StaticResource NavButton}" >
                             Appointments
                         </ListViewItem>
                         <ListViewItem Style="{StaticResource NavButton}" >
-                            Profile
+                            Change Password
                         </ListViewItem>
                     </ListView>
                     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">

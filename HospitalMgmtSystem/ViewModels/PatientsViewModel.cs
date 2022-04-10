@@ -26,11 +26,6 @@ namespace HospitalMgmtSystem.ViewModels
                 OnPropertyChanged(nameof(Patient));
             }
         }
-
-        private User _editPatient = new User();
-        public User EditPatient { get => _editPatient; set { _editPatient = value; OnPropertyChanged(nameof(EditPatient)); } }
-        private string _textValidation;
-        public string textValidation { get => _textValidation; set { _textValidation = value; OnPropertyChanged(nameof(textValidation)); } }
         public ICommand SavePatientsButton { get; set; }
         public ICommand SearchAction { get; set; }
         public ICommand CloseAddPatientModal { get; set; }
