@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalMgmtSystem"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterOwner"
         xmlns:viewmodels="clr-namespace:HospitalMgmtSystem.ViewModels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:HospitalMgmtSystem.Views" 
@@ -17,7 +18,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        SizeToContent="WidthAndHeight"
+       
         Title="Hospital Management System" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:PreLoginViewModel}">

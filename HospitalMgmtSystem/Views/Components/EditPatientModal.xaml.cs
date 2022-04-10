@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HospitalMgmtSystem.Views.Components
 {
     /// <summary>
-    /// Interaction logic for AddNewPatientModal.xaml
+    /// Interaction logic for EditPatientModal.xaml
     /// </summary>
-    public partial class AddNewPatientModal : UserControl
+    public partial class EditPatientModal : UserControl
     {
-        public AddNewPatientModal()
+        public EditPatientModal()
         {
             InitializeComponent();
         }

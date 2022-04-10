@@ -96,10 +96,23 @@
     <Compile Include="Migrations\202204071832240_addedgenderfield.designer.cs">
       <DependentUpon>202204071832240_addedgenderfield.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204080749173_NewfieldsinUsermodel.cs" />
+    <Compile Include="Migrations\202204080749173_NewfieldsinUsermodel.designer.cs">
+      <DependentUpon>202204080749173_NewfieldsinUsermodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204080825412_NewfieldsinUsermodel1.cs" />
+    <Compile Include="Migrations\202204080825412_NewfieldsinUsermodel1.designer.cs">
+      <DependentUpon>202204080825412_NewfieldsinUsermodel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204081028378_NewfieldsinUsermodel2.cs" />
+    <Compile Include="Migrations\202204081028378_NewfieldsinUsermodel2.designer.cs">
+      <DependentUpon>202204081028378_NewfieldsinUsermodel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\PatientProfile.cs" />
     <Compile Include="Store\UserStore.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\EditPatientViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationStore.cs" />
     <Compile Include="ViewModels\PatientsViewModel.cs" />
@@ -109,8 +122,8 @@
     <Compile Include="Views\AdminLoginView.xaml.cs">
       <DependentUpon>AdminLoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Components\AddNewPatientModal.xaml.cs">
-      <DependentUpon>AddNewPatientModal.xaml</DependentUpon>
+    <Compile Include="Views\Components\EditPatientModal.xaml.cs">
+      <DependentUpon>EditPatientModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -128,7 +141,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Components\AddNewPatientModal.xaml">
+    <Page Include="Views\Components\EditPatientModal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +209,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204071832240_addedgenderfield.resx">
       <DependentUpon>202204071832240_addedgenderfield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204080749173_NewfieldsinUsermodel.resx">
+      <DependentUpon>202204080749173_NewfieldsinUsermodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204080825412_NewfieldsinUsermodel1.resx">
+      <DependentUpon>202204080825412_NewfieldsinUsermodel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204081028378_NewfieldsinUsermodel2.resx">
+      <DependentUpon>202204081028378_NewfieldsinUsermodel2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

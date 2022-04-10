@@ -28,5 +28,18 @@ namespace HospitalMgmtSystem.Models
         public string Country { get; set; }
         public string PostalCode { get; set; }
         public string Gender { get; set; }
+        public string Nationality { get; set; }
+        public string Ethnicity { get; set; }
+        public string Address { get; set; }
+        public string Occupation { get; set; }
+        public string ContactNumber { get; set; }
+        public string AlternatePhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string PreviousGPName { get; set; }
+        public string GPAddress { get; set; }
+        public string GPPostalCode { get; set; }
+        public string DoctorName { get; set; }
+        public string KinName { get; set; }
+        public string KinPhoneNumber { get; set; }
     }
 }

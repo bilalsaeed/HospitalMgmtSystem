@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalMgmtSystem.Views"
              mc:Ignorable="d" 
+             xmlns:viewmodels="clr-namespace:HospitalMgmtSystem.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -40,7 +41,7 @@
         </Grid>
         <ScrollViewer Grid.Row="1">
             <Grid>
-                <ItemsControl ItemsSource="{Binding Patients}" HorizontalAlignment="Left">
+                <ItemsControl x:Name="PatientsList" ItemsSource="{Binding Patients}" HorizontalAlignment="Left">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:Card
@@ -51,6 +52,12 @@
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" 
                                     Width="200"
                                     Height="200">
+                                <materialDesign:Card.InputBindings>
+                                    <MouseBinding 
+                                        Command="{Binding Path=DataContext.GoToPatientsDetails, ElementName=PatientsList}"
+                                        CommandParameter="{Binding}"
+                                        MouseAction="LeftClick"/>
+                                </materialDesign:Card.InputBindings>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -78,21 +85,27 @@
                     HorizontalAlignment="Right"
                     Style="{StaticResource MaterialDesignToolForegroundButton}"
                     Width="30"
+                                            CommandParameter="{Binding}"
+                                            Command="{Binding Path=DataContext.EditPatientCommand, ElementName=PatientsList}"
                     Padding="2 0 2 0"
                     materialDesign:RippleAssist.IsCentered="True">
                                             <materialDesign:PackIcon
-          Kind="Phone" />
+          Kind="Edit" />
+
                                         </Button>
-                                        <materialDesign:PopupBox
-        HorizontalAlignment="Right"
-        Padding="2 0 2 0">
-                                            <StackPanel>
-                                                <Button
-            Content="Edit" />
-                                                <Button
-            Content="Delete" />
-                                            </StackPanel>
-                                        </materialDesign:PopupBox>
+                                        <Button
+                                                              HorizontalAlignment="Left"
+                                                              Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                                              IsCancel="True"
+                                                              Margin="5 0 0 0"
+                                                              Width="30"
+                                                              Padding="2 0 2 0"
+                                                              Command="{Binding Path=DataContext.DeletePatientCommand, ElementName=PatientsList}"
+                                                              CommandParameter="{Binding}">
+                                            <Button.Content>
+                                                <materialDesign:PackIcon Kind="Delete" />
+                                            </Button.Content>
+                                        </Button>
                                     </StackPanel>
                                 </Grid>
                             </materialDesign:Card>
@@ -107,17 +120,6 @@
             </Grid>
         </ScrollViewer>
         <Button 
-                        Margin="0 0 35 20"
-                        Background="{StaticResource PrimaryColor}"
-                        BorderThickness="0"
-                        BorderBrush="Transparent"
-                        Grid.Row="1"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                        Style="{StaticResource MaterialDesignFloatingActionButton}"                              
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <materialDesign:PackIcon Kind="Plus" />
-        </Button>
-        <Button 
                         materialDesign:DialogHost.DialogClosingAttached="ClearAddEmployee"
                         Margin="0 0 35 20"
                         Background="{StaticResource PrimaryColor}"
@@ -130,49 +132,116 @@
                         VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <materialDesign:PackIcon Kind="Plus" />
             <Button.CommandParameter>
-                <StackPanel Width="450" VerticalAlignment="Stretch">
-                    <StackPanel Margin="16">
-                        <TextBlock Text="Enter Patient Details"  Style="{StaticResource MaterialDesignBody2TextBlock}" HorizontalAlignment="Center"></TextBlock>
-                        
-                        <TextBox Text="{Binding Patient.UserName}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="User Name" Margin="0 8 0 0" HorizontalAlignment="Center" Width="400"  />
-                        <TextBox Text="{Binding Patient.FirstName}" materialDesign:HintAssist.Hint="First Name"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400"  />
-                        <TextBox Text="{Binding Patient.LastName}" materialDesign:HintAssist.Hint="Last Name"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400" />
-                        <TextBox Text="{Binding Patient.Password}" materialDesign:HintAssist.Hint="Password"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400"  />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="0">
+                        <StackPanel Margin="16">
+                            <TextBlock Text="Enter Patient Details"  Style="{StaticResource MaterialDesignBody2TextBlock}" FontSize="24" HorizontalAlignment="Left"></TextBlock>
+                            <TextBlock Text="{Binding ErrorMessage}" Grid.ColumnSpan="2" TextWrapping="Wrap" Width="400" Margin="0 0 0 0" Style="{StaticResource ErrorMsg}" FontSize="12" HorizontalAlignment="Left"></TextBlock>
+                            <Separator Style="{StaticResource MaterialDesignLightSeparator}"/>
 
-                        <DatePicker SelectedDate="{Binding Patient.DateOfBirth}" Width="400" materialDesign:HintAssist.Hint="Date of Birth"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="0 15 0 0" HorizontalAlignment="Center" />
-                        <ComboBox 
+                            <TextBox Text="{Binding Patient.UserName}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="User Name" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding Patient.FirstName}" materialDesign:HintAssist.Hint="First Name"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Left"  Width="195"  />
+                                <TextBox Text="{Binding Patient.LastName}" materialDesign:HintAssist.Hint="Last Name"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="10 8 0 0" HorizontalAlignment="Center"  Width="195" />
+                            </StackPanel>
+
+                            <TextBox Text="{Binding Patient.Password}" materialDesign:HintAssist.Hint="Password"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400"  />
+                            <StackPanel Orientation="Horizontal">
+                                <DatePicker SelectedDate="{Binding Patient.DateOfBirth}" Width="195" materialDesign:HintAssist.Hint="Date of Birth"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="0 8 0 0" HorizontalAlignment="Left" />
+                                <ComboBox 
                                         Text="{Binding Patient.Gender}" 
                                         materialDesign:HintAssist.Hint="Gender"  
                                         IsEditable="True"
                                         Style="{StaticResource MaterialDesignOutlinedComboBox}"  
-                                        BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14"
-                                        Margin="0 8 0 0" 
-                                        HorizontalAlignment="Center" 
-                                        Width="400" 
+                                        BorderThickness="2" 
+                                        BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14"
+                                        Margin="10 8 0 0" 
+                                        Width="195"
+                                        HorizontalAlignment="Left" 
                                         x:Name="UserGenderCombo" >
-                            <ComboBoxItem>Male</ComboBoxItem>
-                            <ComboBoxItem>Female</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
-                    <TextBlock Margin="0 0 0 0" Text="{Binding textValidation}" Style="{StaticResource ErrorMsg}" x:Name="validation"/>
+                                    <ComboBoxItem>Male</ComboBoxItem>
+                                    <ComboBoxItem>Female</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding Patient.Nationality}" materialDesign:HintAssist.Hint="Nationality"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Left"  Width="195"  />
+                                <TextBox Text="{Binding Patient.Ethnicity}" materialDesign:HintAssist.Hint="Ethnicity"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="10 8 0 0" HorizontalAlignment="Center"  Width="195" />
+                            </StackPanel>
+                            <TextBox Text="{Binding Patient.Address}" materialDesign:HintAssist.Hint="Address"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400"  />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Text="{Binding Patient.Country}" materialDesign:HintAssist.Hint="Country"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Left"  Width="195"  />
+                                <TextBox Text="{Binding Patient.PostalCode}" materialDesign:HintAssist.Hint="Postal Code"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="10 8 0 0" HorizontalAlignment="Center"  Width="195" />
+                            </StackPanel>
+                            <TextBox Text="{Binding Patient.Occupation}" materialDesign:HintAssist.Hint="Occupation"  BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Margin="0 8 0 0" HorizontalAlignment="Center"  Width="400"  />
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                            IsDefault="True"
-                                            Margin="0 8 0 0" Command="{Binding SavePatientsButton}">
-                            SUBMIT
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 0 0"
-                                        Command="{Binding CloseAddPatientModal}">
-                            <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
-                            </Button.CommandParameter>
-                            CANCEL
-                        </Button>
+                        </StackPanel>
+
                     </StackPanel>
-                </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <StackPanel Margin="0 125">
+                            <TextBox Text="{Binding Patient.ContactNumber}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Contact Number" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.AlternatePhoneNumber}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Alternate Contact Number" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.EmailAddress}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Email Address" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.KinName}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Next of Kin" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.KinPhoneNumber}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Next of Kin Contact" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Margin="16 100 10 10">
+                            <TextBlock Text="Previous GP information"  Style="{StaticResource MaterialDesignBody2TextBlock}" FontSize="24" HorizontalAlignment="Left"></TextBlock>
+                            <Separator Style="{StaticResource MaterialDesignLightSeparator}"/>
+
+                            <TextBox Text="{Binding Patient.PreviousGPName}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                                     FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" 
+                                     materialDesign:HintAssist.Hint="Name of GP" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.GPAddress}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                     FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Address" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.GPPostalCode}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Postal Code" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <TextBox Text="{Binding Patient.DoctorName}" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}" FontSize="14" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="Doctor Name" Margin="0 8 0 0" HorizontalAlignment="Left" Width="400"  />
+                            <Separator Style="{StaticResource MaterialDesignLightSeparator}"/>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 210 35 20">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                    <Button 
+                                            IsDefault="True"
+                                            Command="{Binding SavePatientsButton}"
+                                            x:Name="s" 
+                                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                                            Height="53" 
+                                            Width="195" 
+                                            materialDesign:ButtonAssist.CornerRadius="10" 
+                                            FontSize="18" 
+                                            Content="SUBMIT">
+                                    </Button>
+                                    <Button Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                        IsCancel="True"
+                                        Margin="10 0 0 0"
+                                            Height="53" 
+                                            materialDesign:ButtonAssist.CornerRadius="10" 
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                                            Width="195" 
+                                            FontSize="18" 
+                                        Command="{Binding CloseAddPatientModal}">
+                                        CANCEL
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
             </Button.CommandParameter>
         </Button>
     </Grid>
