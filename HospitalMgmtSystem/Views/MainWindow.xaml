@@ -42,6 +42,9 @@
         <DataTemplate DataType="{x:Type viewmodels:DoctorsViewModel}">
             <views:Doctors />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:AppointmentsViewModel}">
+            <views:AppointmentsView />
+        </DataTemplate>
     </Window.Resources>
     <materialDesign:DialogHost Name="RootDialog" Identifier="RootDialog" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid>
@@ -72,7 +75,7 @@
                         <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToDoctorsView">
                             Doctors
                         </ListViewItem>
-                        <ListViewItem Style="{StaticResource NavButton}" >
+                        <ListViewItem Style="{StaticResource NavButton}" MouseUp="goToAppointmentsView">
                             Appointments
                         </ListViewItem>
                         <ListViewItem Style="{StaticResource NavButton}" >

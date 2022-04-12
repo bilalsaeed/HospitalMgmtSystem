@@ -41,5 +41,10 @@ namespace HospitalMgmtSystem
         {
             _navigationStore.CurrentViewModel = new DoctorsViewModel();
         }
+
+        private void goToAppointmentsView(object sender, MouseButtonEventArgs e)
+        {
+            _navigationStore.CurrentViewModel = new AppointmentsViewModel();
+        }
     }
 }

@@ -71,6 +71,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\AppointmentsDto.cs" />
+    <Compile Include="DTOs\ComboBoxPair.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Migrations\202204061037122_userModel.cs" />
     <Compile Include="Migrations\202204061037122_userModel.designer.cs">
@@ -108,8 +110,18 @@
     <Compile Include="Migrations\202204081028378_NewfieldsinUsermodel2.designer.cs">
       <DependentUpon>202204081028378_NewfieldsinUsermodel2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204111059005_AppointmentsModel.cs" />
+    <Compile Include="Migrations\202204111059005_AppointmentsModel.designer.cs">
+      <DependentUpon>202204111059005_AppointmentsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204111144406_AppointmentsModel1.cs" />
+    <Compile Include="Migrations\202204111144406_AppointmentsModel1.designer.cs">
+      <DependentUpon>202204111144406_AppointmentsModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\PatientProfile.cs" />
     <Compile Include="Store\UserStore.cs" />
+    <Compile Include="ViewModels\AppointmentsViewModel.cs" />
     <Compile Include="ViewModels\DoctorsModalViewModal.cs" />
     <Compile Include="ViewModels\DoctorsViewModel.cs" />
     <Compile Include="ViewModels\AdminsViewModel.cs" />
@@ -128,6 +140,9 @@
     </Compile>
     <Compile Include="Views\Admins.xaml.cs">
       <DependentUpon>Admins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppointmentsView.xaml.cs">
+      <DependentUpon>AppointmentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Components\AddEditAdminModal.xaml.cs">
       <DependentUpon>AddEditAdminModal.xaml</DependentUpon>
@@ -158,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Admins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppointmentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,6 +269,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204081028378_NewfieldsinUsermodel2.resx">
       <DependentUpon>202204081028378_NewfieldsinUsermodel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111059005_AppointmentsModel.resx">
+      <DependentUpon>202204111059005_AppointmentsModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111144406_AppointmentsModel1.resx">
+      <DependentUpon>202204111144406_AppointmentsModel1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
