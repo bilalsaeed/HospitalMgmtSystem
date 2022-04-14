@@ -27,6 +27,10 @@ namespace HospitalMgmtSystem.ViewModels
             this.navigationStore = navigationStore;
             this.navigationStore.NonAuthenticatedViews = Visibility.Collapsed;
             this.navigationStore.AuthenticatedViews = Visibility.Visible;
+            if (UserStore.User.UserType == UserTypeEnum.Admin)
+                navigationStore.IsAdmin = Visibility.Visible;
+            else
+                navigationStore.IsAdmin = Visibility.Collapsed;
             setWelcomeText();
         }
 

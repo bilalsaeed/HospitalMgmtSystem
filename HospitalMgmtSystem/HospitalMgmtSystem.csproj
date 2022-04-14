@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,6 +74,8 @@
     </ApplicationDefinition>
     <Compile Include="DTOs\AppointmentsDto.cs" />
     <Compile Include="DTOs\ComboBoxPair.cs" />
+    <Compile Include="DTOs\MedicalRecordsDTO.cs" />
+    <Compile Include="DTOs\PatientDiagnosesDTO.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Migrations\202204061037122_userModel.cs" />
     <Compile Include="Migrations\202204061037122_userModel.designer.cs">
@@ -118,10 +121,34 @@
     <Compile Include="Migrations\202204111144406_AppointmentsModel1.designer.cs">
       <DependentUpon>202204111144406_AppointmentsModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204131344358_addedisavailablecolumn.cs" />
+    <Compile Include="Migrations\202204131344358_addedisavailablecolumn.designer.cs">
+      <DependentUpon>202204131344358_addedisavailablecolumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204131758354_PatientDiagnosis.cs" />
+    <Compile Include="Migrations\202204131758354_PatientDiagnosis.designer.cs">
+      <DependentUpon>202204131758354_PatientDiagnosis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204131759547_PatientDiagnosis1.cs" />
+    <Compile Include="Migrations\202204131759547_PatientDiagnosis1.designer.cs">
+      <DependentUpon>202204131759547_PatientDiagnosis1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204131909369_PatientMedicalRecords.cs" />
+    <Compile Include="Migrations\202204131909369_PatientMedicalRecords.designer.cs">
+      <DependentUpon>202204131909369_PatientMedicalRecords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204131933008_PatientMedicalRecords1.cs" />
+    <Compile Include="Migrations\202204131933008_PatientMedicalRecords1.designer.cs">
+      <DependentUpon>202204131933008_PatientMedicalRecords1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Appointments.cs" />
+    <Compile Include="Models\PatientDiagnosis.cs" />
+    <Compile Include="Models\PatientMedicalRecords.cs" />
     <Compile Include="Models\PatientProfile.cs" />
     <Compile Include="Store\UserStore.cs" />
+    <Compile Include="ViewModels\AccessCodeViewModel.cs" />
     <Compile Include="ViewModels\AppointmentsViewModel.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\DoctorsModalViewModal.cs" />
     <Compile Include="ViewModels\DoctorsViewModel.cs" />
     <Compile Include="ViewModels\AdminsViewModel.cs" />
@@ -134,6 +161,7 @@
     <Compile Include="ViewModels\PatientsViewModel.cs" />
     <Compile Include="ViewModels\PreLoginViewModel.cs" />
     <Compile Include="ViewModels\AdminLoginViewModel.cs" />
+    <Compile Include="ViewModels\PrescriptionViewModel.cs" />
     <Compile Include="ViewModels\UserRegistrationViewModel.cs" />
     <Compile Include="Views\AdminLoginView.xaml.cs">
       <DependentUpon>AdminLoginView.xaml</DependentUpon>
@@ -143,6 +171,12 @@
     </Compile>
     <Compile Include="Views\AppointmentsView.xaml.cs">
       <DependentUpon>AppointmentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangePassword.xaml.cs">
+      <DependentUpon>ChangePassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\AccessCodeModal.xaml.cs">
+      <DependentUpon>AccessCodeModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Components\AddEditAdminModal.xaml.cs">
       <DependentUpon>AddEditAdminModal.xaml</DependentUpon>
@@ -165,6 +199,9 @@
     <Compile Include="Views\PreLogin.xaml.cs">
       <DependentUpon>PreLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrescriptionView.xaml.cs">
+      <DependentUpon>PrescriptionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserRegistration.xaml.cs">
       <DependentUpon>UserRegistration.xaml</DependentUpon>
     </Compile>
@@ -177,6 +214,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppointmentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\AccessCodeModal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PreLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrescriptionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,6 +324,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204111144406_AppointmentsModel1.resx">
       <DependentUpon>202204111144406_AppointmentsModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204131344358_addedisavailablecolumn.resx">
+      <DependentUpon>202204131344358_addedisavailablecolumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204131758354_PatientDiagnosis.resx">
+      <DependentUpon>202204131758354_PatientDiagnosis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204131759547_PatientDiagnosis1.resx">
+      <DependentUpon>202204131759547_PatientDiagnosis1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204131909369_PatientMedicalRecords.resx">
+      <DependentUpon>202204131909369_PatientMedicalRecords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204131933008_PatientMedicalRecords1.resx">
+      <DependentUpon>202204131933008_PatientMedicalRecords1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

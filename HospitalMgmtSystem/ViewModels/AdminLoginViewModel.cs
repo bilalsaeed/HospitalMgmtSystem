@@ -113,7 +113,6 @@ namespace HospitalMgmtSystem.ViewModels
             }
             else
             {
-
                 var user = db.User.Where(a => a.UserName == User.UserName && a.Password == password && a.UserType == _userTypeEnum).FirstOrDefault();
 
                 if (user == null)

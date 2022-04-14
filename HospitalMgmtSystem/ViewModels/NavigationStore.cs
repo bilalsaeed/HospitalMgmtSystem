@@ -37,6 +37,7 @@ namespace HospitalMgmtSystem.ViewModels
         }
         private Visibility _authenticatedViews;
         private Visibility _nonAuthenticatedViews;
+        private Visibility _isAdmin;
         public Visibility NonAuthenticatedViews
         {
             get => _nonAuthenticatedViews;
@@ -52,6 +53,16 @@ namespace HospitalMgmtSystem.ViewModels
             set
             {
                 _authenticatedViews = value;
+                OnCurrentViewModelChanged();
+            }
+        }
+
+        public Visibility IsAdmin
+        {
+            get => _isAdmin;
+            set
+            {
+                _isAdmin = value;
                 OnCurrentViewModelChanged();
             }
         }

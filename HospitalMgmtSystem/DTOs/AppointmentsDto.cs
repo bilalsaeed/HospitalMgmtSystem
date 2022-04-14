@@ -15,5 +15,6 @@ namespace HospitalMgmtSystem.DTOs
         public string AppointmentTime { get; set; }
         public int Duration { get; set; }
         public int Bill { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

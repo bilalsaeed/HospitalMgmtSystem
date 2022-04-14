@@ -16,6 +16,8 @@ namespace HospitalMgmtSystem.ViewModels
         public Visibility NonAuthenticatedViews => navigationStore.NonAuthenticatedViews;
         public Visibility AuthenticatedViews => navigationStore.AuthenticatedViews;
 
+        public Visibility IsAdmin => navigationStore.IsAdmin;
+
         public ICommand LogoutCommand { get; set; }
 
         public MainWindowViewModel(NavigationStore navigationStore)
@@ -24,12 +26,18 @@ namespace HospitalMgmtSystem.ViewModels
             this.navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             this.navigationStore.CurrentViewModelChanged += OnAuthenticatedChanged;
             this.navigationStore.CurrentViewModelChanged += OnNonAuthenticatedChanged;
+            this.navigationStore.CurrentViewModelChanged += OnIsAdminChanged;
             LogoutCommand = new RelayCommand(obj => {
                 UserStore.User = null;
                 this.navigationStore.CurrentViewModel = new PreLoginViewModel(this.navigationStore);
                 this.navigationStore.AuthenticatedViews = Visibility.Collapsed;
                 this.navigationStore.NonAuthenticatedViews = Visibility.Visible;
             });
+        }
+
+        private void OnIsAdminChanged()
+        {
+            OnPropertyChanged(nameof(this.IsAdmin));
         }
 
         private void OnCurrentViewModelChanged()

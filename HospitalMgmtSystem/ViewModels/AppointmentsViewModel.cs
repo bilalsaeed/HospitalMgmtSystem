@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace HospitalMgmtSystem.ViewModels
@@ -27,9 +28,16 @@ namespace HospitalMgmtSystem.ViewModels
         private string _error;
         public string Error { get => _error; set { _error = value; OnPropertyChanged(nameof(Error)); } }
         public ICommand SaveCommand { get; set; }
+        public ICommand NavigateToDetailsAction { get; set; }
+        public ICommand deleteAppointment { get; set; }
+        public ICommand ToggleDoctorAvailability { get; set; }
+        public ICommand SearchAction { get; set; }
 
         private readonly HospitalDbContext db = new HospitalDbContext();
         private readonly User LoggedInUser = UserStore.User;
+        public Visibility IsAdmin { get; set; }
+        public string SearchQuery { get; set; }
+
         public AppointmentsViewModel()
         {
             Patients = new ObservableCollection<ComboBoxPair>();
@@ -48,10 +56,47 @@ namespace HospitalMgmtSystem.ViewModels
                 SaveAppointment();
             });
 
-            LoadAppointments();
+            NavigateToDetailsAction = new RelayCommand(obj =>
+            {
+                var appointment = obj as AppointmentsDto;
+                NavigationStore.Instance.CurrentViewModel = new PrescriptionViewModel(appointment);
+            });
+
+            deleteAppointment = new RelayCommand(obj =>
+            {
+                var appointment = obj as AppointmentsDto;
+                if (appointment != null)
+                {
+                    db.Appointments.Remove(db.Appointments.Find(appointment.Id));
+                    db.SaveChanges();
+                    LoadAppointments(this.SearchQuery);
+                }
+            });
+
+            ToggleDoctorAvailability = new RelayCommand(obj =>
+            {
+                var app = obj as AppointmentsDto;
+                var appointmentDb = db.Appointments.Find(app.Id);
+                appointmentDb.IsAvailable = !appointmentDb.IsAvailable;
+                db.Entry(appointmentDb).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                LoadAppointments(this.SearchQuery);
+            });
+
+            SearchAction = new RelayCommand(obj =>
+            {
+                LoadAppointments(this.SearchQuery);
+            });
+
+            LoadAppointments(this.SearchQuery);
+
+            if (UserStore.User.UserType == UserTypeEnum.Admin)
+                IsAdmin = Visibility.Visible;
+            else
+                IsAdmin = Visibility.Collapsed;
         }
 
-        private void LoadAppointments()
+        private void LoadAppointments(string query)
         {
             List<AppointmentsDto> list = new List<AppointmentsDto>();
             switch (LoggedInUser.UserType)
@@ -61,6 +106,10 @@ namespace HospitalMgmtSystem.ViewModels
                             join d in db.User.ToList() on a.DoctorId equals d.Id
                             join p in db.User.ToList() on a.PatientId equals p.Id
 
+                            where string.IsNullOrEmpty(query) ||
+                            (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
+                            (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1)
+
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
@@ -69,7 +118,8 @@ namespace HospitalMgmtSystem.ViewModels
                                 DoctorName = d.FirstName + " " + d.LastName,
                                 PatientName = p.FirstName + " " + p.LastName,
                                 Bill = a.Bill.Value,
-                                Duration = a.Duration.Value
+                                Duration = a.Duration.Value,
+                                IsAvailable = a.IsAvailable
                             }).ToList();
                     break;
                 case UserTypeEnum.Doctor:
@@ -78,22 +128,9 @@ namespace HospitalMgmtSystem.ViewModels
                             join p in db.User.ToList() on a.PatientId equals p.Id
                             where a.DoctorId == LoggedInUser.Id
 
-                            select new AppointmentsDto()
-                            {
-                                Id = a.Id,
-                                AppointmentDate = a.AppointmentDate.ToString("d"),
-                                AppointmentTime = a.AppointmentTime.ToString("t"),
-                                DoctorName = d.FirstName + " " + d.LastName,
-                                PatientName = p.FirstName + " " + p.LastName,
-                                Bill = a.Bill.Value,
-                                Duration = a.Duration.Value
-                            }).ToList();
-                    break;
-                case UserTypeEnum.Patient:
-                    list = (from a in db.Appointments.ToList()
-                            join d in db.User.ToList() on a.DoctorId equals d.Id
-                            join p in db.User.ToList() on a.PatientId equals p.Id
-                            where a.PatientId == LoggedInUser.Id
+                            && (string.IsNullOrEmpty(query) ||
+                            (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
+                            (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1))
 
                             select new AppointmentsDto()
                             {
@@ -103,7 +140,30 @@ namespace HospitalMgmtSystem.ViewModels
                                 DoctorName = d.FirstName + " " + d.LastName,
                                 PatientName = p.FirstName + " " + p.LastName,
                                 Bill = a.Bill.Value,
-                                Duration = a.Duration.Value
+                                Duration = a.Duration.Value,
+                                IsAvailable = a.IsAvailable
+                            }).ToList();
+                    break;
+                case UserTypeEnum.Patient:
+                    list = (from a in db.Appointments.ToList()
+                            join d in db.User.ToList() on a.DoctorId equals d.Id
+                            join p in db.User.ToList() on a.PatientId equals p.Id
+                            where a.PatientId == LoggedInUser.Id
+
+                            && (string.IsNullOrEmpty(query) ||
+                            (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
+                            (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1))
+
+                            select new AppointmentsDto()
+                            {
+                                Id = a.Id,
+                                AppointmentDate = a.AppointmentDate.ToString("d"),
+                                AppointmentTime = a.AppointmentTime.ToString("t"),
+                                DoctorName = d.FirstName + " " + d.LastName,
+                                PatientName = p.FirstName + " " + p.LastName,
+                                Bill = a.Bill.Value,
+                                Duration = a.Duration.Value,
+                                IsAvailable = a.IsAvailable
                             }).ToList();
                     break;
             }
@@ -113,14 +173,14 @@ namespace HospitalMgmtSystem.ViewModels
         private void SaveAppointment()
         {
             Error = string.Empty;
+            Appointments.DoctorId = int.Parse(this.DoctorSelectedItem.Key);
+            Appointments.PatientId = int.Parse(this.PatientSelectedItem.Key);
             if (Validate())
             {
-                Appointments.DoctorId = int.Parse(this.DoctorSelectedItem.Key);
-                Appointments.PatientId = int.Parse(this.PatientSelectedItem.Key);
                 db.Appointments.Add(Appointments);
                 db.SaveChanges();
                 CloseRootDialog();
-                LoadAppointments();
+                LoadAppointments(this.SearchQuery);
             }
         }
 
@@ -155,12 +215,26 @@ namespace HospitalMgmtSystem.ViewModels
                 Error = "Bill Can't Have empty Values";
                 return false;
             }
+
+            if (DrAlreadyHasAnAppointment())
+            {
+                Error = "Doctor already has an appointment at this time!";
+                return false;
+            }
             return true;
         }
 
-        private bool AlreadyHasAppointment()
+        private bool DrAlreadyHasAnAppointment()
         {
-            return false;
+            var alreadyExists = db.Appointments.
+                ToList().
+                Where(
+                a => !a.IsAvailable &&
+                a.AppointmentDate.ToString("d") == this.Appointments.AppointmentDate.ToString("d") &&
+                a.AppointmentTime.ToString("t") == this.Appointments.AppointmentTime.ToString("t") &&
+                a.DoctorId == this.Appointments.DoctorId).
+                FirstOrDefault();
+            return alreadyExists != null;
         }
     }
 }

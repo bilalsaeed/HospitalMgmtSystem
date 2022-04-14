@@ -13,5 +13,7 @@ namespace HospitalMgmtSystem.DBContext
         public HospitalDbContext() : base("SchoolContext") { }
         public DbSet<User> User { get; set; }
         public DbSet<Appointments> Appointments { get; set; }
+        public DbSet<PatientDiagnosis> PatientDiagnosis { get; set; }
+        public DbSet<PatientMedicalRecords> PatientMedicalRecords { get; set; }
     }
 }
