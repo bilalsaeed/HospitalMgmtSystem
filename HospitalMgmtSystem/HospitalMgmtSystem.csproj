@@ -156,6 +156,7 @@
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\AddEditAdminViewModel.cs" />
     <Compile Include="ViewModels\EditPatientViewModel.cs" />
+    <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationStore.cs" />
     <Compile Include="ViewModels\PatientsViewModel.cs" />
@@ -192,6 +193,9 @@
     </Compile>
     <Compile Include="Views\Doctors.xaml.cs">
       <DependentUpon>Doctors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ForgotPasswordView.xaml.cs">
+      <DependentUpon>ForgotPasswordView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Patients.xaml.cs">
       <DependentUpon>Patients.xaml</DependentUpon>
@@ -242,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Doctors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ForgotPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

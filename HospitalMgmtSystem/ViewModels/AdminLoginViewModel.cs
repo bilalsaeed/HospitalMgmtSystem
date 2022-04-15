@@ -20,6 +20,7 @@ namespace HospitalMgmtSystem.ViewModels
         public ICommand CloseApp { get; set; }
         public ICommand RegistrationPage { get; set; }
         public ICommand LoginButton { get; set; }
+        public ICommand ForgotPasswordCommand { get; set; }
 
         private string _userType;
         private string _errorMessage;
@@ -42,16 +43,6 @@ namespace HospitalMgmtSystem.ViewModels
             {
                 _user = value;
                 OnPropertyChanged(nameof(User));
-            }
-        }
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-
-            set
-            {
-                _errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
         private readonly HospitalDbContext db = new HospitalDbContext();
@@ -82,13 +73,15 @@ namespace HospitalMgmtSystem.ViewModels
 
             RegistrationPage = new RelayCommand(obj =>
             {
-                GoToRegistrationPage();//UserRegistrationViewModel
+                GoToRegistrationPage();
             });
 
             LoginButton = new RelayCommand(obj =>
             {
                 LoginUser(obj);
             });
+
+            ForgotPasswordCommand = new RelayCommand(obj => { this.navigationStore.CurrentViewModel = new ForgotPasswordViewModel(userType); });
         }
 
         private void GoToRegistrationPage()

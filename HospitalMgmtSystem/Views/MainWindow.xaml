@@ -53,6 +53,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ChangePasswordViewModel}">
             <views:ChangePassword />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ForgotPasswordViewModel}">
+            <views:ForgotPasswordView />
+        </DataTemplate>
     </Window.Resources>
     <materialDesign:DialogHost
         Name="RootDialog"
