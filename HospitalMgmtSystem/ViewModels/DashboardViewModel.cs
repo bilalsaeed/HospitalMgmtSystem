@@ -31,7 +31,8 @@ namespace HospitalMgmtSystem.ViewModels
                 navigationStore.IsAdmin = Visibility.Visible;
             else
                 navigationStore.IsAdmin = Visibility.Collapsed;
-            setWelcomeText();
+
+            NavigationStore.Instance.CurrentViewModel = new AppointmentsViewModel();
         }
 
         private void setWelcomeText()

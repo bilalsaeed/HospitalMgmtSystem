@@ -97,26 +97,35 @@
                         Margin="0,15,0,0"
                         DockPanel.Dock="Top"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListViewItem MouseUp="goToAppointmentsView" Style="{StaticResource NavButton}">
+                            Home Page
+                        </ListViewItem>
                         <ListViewItem
                             MouseUp="goToPatientsView"
                             Style="{StaticResource NavButton}"
                             Visibility="{Binding IsAdmin}">
                             Patients
                         </ListViewItem>
-                        <ListViewItem
+                        <ListViewItem                            
                             MouseUp="goToAdminsView"
                             Style="{StaticResource NavButton}"
                             Visibility="{Binding IsAdmin}">
                             Admins
+                        </ListViewItem>
+                        <ListViewItem                            
+                            MouseUp="goToAdminsView"
+                            Style="{StaticResource NavButton}"
+                            Visibility="{Binding IsAdmin}">
+                            Letter Printouts
+                        </ListViewItem>
+                        <ListViewItem MouseUp="goToAppointmentsView" Style="{StaticResource NavButton}">
+                            Appointments Diary
                         </ListViewItem>
                         <ListViewItem
                             MouseUp="goToDoctorsView"
                             Style="{StaticResource NavButton}"
                             Visibility="{Binding IsAdmin}">
                             Doctors
-                        </ListViewItem>
-                        <ListViewItem MouseUp="goToAppointmentsView" Style="{StaticResource NavButton}">
-                            Appointments
                         </ListViewItem>
                         <ListViewItem MouseUp="goToChangePasswordView" Style="{StaticResource NavButton}">
                             Change Password

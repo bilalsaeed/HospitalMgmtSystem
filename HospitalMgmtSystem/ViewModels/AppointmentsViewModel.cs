@@ -18,8 +18,8 @@ namespace HospitalMgmtSystem.ViewModels
     {
         public ObservableCollection<ComboBoxPair> Patients { get; set; }
         public ObservableCollection<ComboBoxPair> Doctors { get; set; }
-        private ObservableCollection<AppointmentsDto> _allAppointments = new ObservableCollection<AppointmentsDto>();
-        public ObservableCollection<AppointmentsDto> AllAppointments { get { return _allAppointments; } set { _allAppointments = value; OnPropertyChanged(nameof(AllAppointments)); } }
+        private ObservableCollection<AppointmentsView> _allAppointments = new ObservableCollection<AppointmentsView>();
+        public ObservableCollection<AppointmentsView> AllAppointments { get { return _allAppointments; } set { _allAppointments = value; OnPropertyChanged(nameof(AllAppointments)); } }
         public ComboBoxPair PatientSelectedItem { get; set; }
         public ComboBoxPair DoctorSelectedItem { get; set; }
 
@@ -113,13 +113,14 @@ namespace HospitalMgmtSystem.ViewModels
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
-                                AppointmentDate = a.AppointmentDate.ToString("d"),
+                                AppointmentDate = a.AppointmentDate.ToString("D"),
                                 AppointmentTime = a.AppointmentTime.ToString("t"),
                                 DoctorName = d.FirstName + " " + d.LastName,
                                 PatientName = p.FirstName + " " + p.LastName,
                                 Bill = a.Bill.Value,
                                 Duration = a.Duration.Value,
-                                IsAvailable = a.IsAvailable
+                                IsAvailable = a.IsAvailable,
+                                Room = a.Room
                             }).ToList();
                     break;
                 case UserTypeEnum.Doctor:
@@ -135,13 +136,14 @@ namespace HospitalMgmtSystem.ViewModels
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
-                                AppointmentDate = a.AppointmentDate.ToString("d"),
+                                AppointmentDate = a.AppointmentDate.ToString("D"),
                                 AppointmentTime = a.AppointmentTime.ToString("t"),
                                 DoctorName = d.FirstName + " " + d.LastName,
                                 PatientName = p.FirstName + " " + p.LastName,
                                 Bill = a.Bill.Value,
                                 Duration = a.Duration.Value,
-                                IsAvailable = a.IsAvailable
+                                IsAvailable = a.IsAvailable,
+                                Room = a.Room
                             }).ToList();
                     break;
                 case UserTypeEnum.Patient:
@@ -157,17 +159,28 @@ namespace HospitalMgmtSystem.ViewModels
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
-                                AppointmentDate = a.AppointmentDate.ToString("d"),
+                                AppointmentDate = a.AppointmentDate.ToString("D"),
                                 AppointmentTime = a.AppointmentTime.ToString("t"),
                                 DoctorName = d.FirstName + " " + d.LastName,
                                 PatientName = p.FirstName + " " + p.LastName,
                                 Bill = a.Bill.Value,
                                 Duration = a.Duration.Value,
-                                IsAvailable = a.IsAvailable
+                                IsAvailable = a.IsAvailable,
+                                Room = a.Room
                             }).ToList();
                     break;
             }
-            AllAppointments = new ObservableCollection<AppointmentsDto>(list);
+
+            var doctors = list.Select(a => a.DoctorName).Distinct();
+
+            foreach(var doc in doctors)
+            {
+                var appointmentView = new AppointmentsView();
+                appointmentView.DoctorName = doc;
+                appointmentView.Appointments = new ObservableCollection<AppointmentsDto>(list.Where(a => a.DoctorName == doc));
+                AllAppointments.Add(appointmentView);
+
+            }
         }
 
         private void SaveAppointment()

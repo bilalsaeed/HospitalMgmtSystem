@@ -18,5 +18,6 @@ namespace HospitalMgmtSystem.Models
         public int? Duration { get; set; }
         public int? Bill { get; set; }
         public bool IsAvailable { get; set; }
+        public string Room { get; set; }
     }
 }

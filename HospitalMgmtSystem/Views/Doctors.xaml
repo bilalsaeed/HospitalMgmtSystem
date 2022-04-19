@@ -20,11 +20,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="0" Margin="8 0 0 0" 
                          materialDesign:HintAssist.Hint="Type to search"
                          Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
-                         materialDesign:HintAssist.HintOpacity="0.4"
                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden" 
                          BorderThickness="0"
                          MinWidth="200" VerticalAlignment="Center"
@@ -34,7 +34,19 @@
                     </TextBox.InputBindings>
                 </TextBox>
                 <Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding SearchAction}" Grid.Column="1">
-                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                    <materialDesign:PackIcon Kind="Magnify" />
+                </Button>
+                <Button 
+                        Margin="419,6,0,0"
+                        Grid.Column="2"
+                        Background="{StaticResource PrimaryColor}"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Style="{StaticResource MaterialDesignFlatAccentBgButton}"                              
+                        Command="{Binding AddModalCommand}"
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                    Content="Add a Doctor">
                 </Button>
             </Grid>
         </Grid>
@@ -118,17 +130,5 @@
                 </ItemsControl>
             </Grid>
         </ScrollViewer>
-        <Button 
-                        Margin="0 0 35 20"
-                        Background="{StaticResource PrimaryColor}"
-                        BorderThickness="0"
-                        BorderBrush="Transparent"
-                        Grid.Row="1"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                        Style="{StaticResource MaterialDesignFloatingActionButton}"                              
-                        Command="{Binding AddModalCommand}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <materialDesign:PackIcon Kind="Plus" />
-        </Button>
     </Grid>
 </UserControl>

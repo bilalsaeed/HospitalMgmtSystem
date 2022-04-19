@@ -13,6 +13,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
@@ -31,9 +32,9 @@
                     Margin="8,0,0,0"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="Type to search"
-                    materialDesign:HintAssist.HintOpacity="0.4"
+                    
                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                    BorderThickness="0"
+                    BorderThickness="2"
                     Foreground="{StaticResource DarkText}"
                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
@@ -44,113 +45,92 @@
                     Grid.Column="1"
                     Command="{Binding SearchAction}"
                     Style="{DynamicResource MaterialDesignToolButton}">
-                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                    <materialDesign:PackIcon Kind="Magnify" />
                 </Button>
             </Grid>
         </Grid>
-
-        <ScrollViewer Grid.Row="1">
+        <TextBlock
+            Grid.Row="1"
+            Margin="10"
+            FontSize="24"
+            Text="Todays Appointments" />
+        <ScrollViewer Grid.Row="2">
             <ItemsControl
-                x:Name="AppointmentsList"
+                x:Name="DoctorsHeaders"
                 HorizontalAlignment="Left"
                 ItemsSource="{Binding AllAppointments}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <materialDesign:Card
-                            Width="400"
-                            Height="110"
-                            Margin="14"
-                            Padding="5"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            Background="#03a9f4"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <materialDesign:Card.InputBindings>
-                                <MouseBinding
-                                    Command="{Binding Path=DataContext.NavigateToDetailsAction, ElementName=AppointmentsList}"
-                                    CommandParameter="{Binding}"
-                                    MouseAction="LeftClick" />
-                            </materialDesign:Card.InputBindings>
-                            <StackPanel VerticalAlignment="Center">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox
-                                        x:Name="MaterialDesignFilledPasswordFieldPasswordBoxEnabledComboBox"
-                                        Grid.Column="0"
-                                        Width="25"
-                                        Height="25"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Command="{Binding Path=DataContext.ToggleDoctorAvailability, ElementName=AppointmentsList}"
-                                        CommandParameter="{Binding}"
-                                        IsChecked="{Binding IsAvailable}"
-                                        Style="{StaticResource MaterialDesignActionAccentToggleButton}" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        FontSize="20"
-                                        FontWeight="Bold"
-                                        Style="{StaticResource InfoValue}">
-                                        <Run Text="{Binding AppointmentDate}" />
-                                        <Run Text="{Binding AppointmentTime}" />
-                                    </TextBlock>
-                                    <Button
-                                        Grid.Column="2"
-                                        Margin="8,0"
-                                        Padding="0"
-                                        HorizontalAlignment="Right"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding Path=DataContext.deleteAppointment, ElementName=AppointmentsList}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignToolForegroundButton}">
-                                        <materialDesign:PackIcon
-                                            Width="25"
-                                            Height="25"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Top"
-                                            Foreground="{StaticResource PrimaryColor}"
-                                            Kind="DeleteForever" />
-                                    </Button>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <materialDesign:Card
+                                Grid.Row="0"
+                                Width="250"
+                                Margin="14"
+                                Padding="8"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource GreyBG}"
+                                Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                <TextBlock
+                                    FontSize="16"
+                                    Text="{Binding DoctorName}"
+                                    TextAlignment="Center" />
+                            </materialDesign:Card>
+                            <ItemsControl
+                                x:Name="DoctorsHeaders"
+                                Grid.Row="1"
+                                HorizontalAlignment="Left"
+                                ItemsSource="{Binding Appointments}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card
+                                            Width="250"
+                                            Height="90"
+                                            Margin="10"
+                                            Padding="10"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                            Background="#72c4f7"
+                                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                                            <materialDesign:Card.InputBindings>
+                                                <MouseBinding
+                                                    Command="{Binding Path=DataContext.NavigateToDetailsAction, ElementName=AppointmentsList}"
+                                                    CommandParameter="{Binding}"
+                                                    MouseAction="LeftClick" />
+                                            </materialDesign:Card.InputBindings>
+                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <TextBlock
+                                                    FontSize="14"
+                                                    Foreground="Black"
+                                                    Style="{StaticResource InfoValue}"
+                                                    Text="{Binding PatientName}" />
+                                                <TextBlock
+                                                    Margin="0,8,0,0"
+                                                    FontSize="14"
+                                                    Foreground="Black"
+                                                    Style="{StaticResource InfoValue}"
+                                                    Text="{Binding Room}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    Margin="0,8,0,0"
+                                                    FontSize="14"
+                                                    Foreground="Black"
+                                                    Style="{StaticResource InfoValue}">
+                                                    <Run Text="{Binding AppointmentDate}" />
+                                                    <Run Text="{Binding AppointmentTime}" />
+                                                </TextBlock>
+                                            </StackPanel>
 
-                                </Grid>
-
-
-                                <Grid Margin="0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="130" />
-                                        <ColumnDefinition Width="130" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="45" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Foreground="White" Style="{StaticResource InfoTitle}">Patient Name</TextBlock>
-                                        <TextBlock Style="{StaticResource InfoValue}" Text="{Binding PatientName}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Foreground="White" Style="{StaticResource InfoTitle}">Doctor Name</TextBlock>
-                                        <TextBlock Style="{StaticResource InfoValue}" Text="{Binding DoctorName}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <TextBlock Foreground="White" Style="{StaticResource InfoTitle}">Duration</TextBlock>
-                                        <TextBlock Style="{StaticResource InfoValue}" Text="{Binding Duration}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="3">
-                                        <TextBlock Foreground="White" Style="{StaticResource InfoTitle}">Bill</TextBlock>
-                                        <TextBlock Style="{StaticResource InfoValue}" Text="{Binding Bill}" />
-                                    </StackPanel>
-                                </Grid>
-                            </StackPanel>
-
-                        </materialDesign:Card>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
@@ -164,110 +144,5 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </ScrollViewer>
-        <Button
-            Grid.Row="1"
-            Margin="0,0,35,20"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            materialDesign:ShadowAssist.ShadowDepth="Depth1"
-            Background="{StaticResource PrimaryColor}"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            Visibility="{Binding IsAdmin}"
-            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-            Style="{StaticResource MaterialDesignFloatingActionButton}">
-            <materialDesign:PackIcon Kind="Plus" />
-            <Button.CommandParameter>
-                <StackPanel>
-                    <StackPanel
-                        Width="400"
-                        Margin="16"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
-                        <ComboBox
-                            x:Name="PatientNameComboBox"
-                            Width="350"
-                            Margin="0,8,8,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Patient Name"
-                            DisplayMemberPath="Value"
-                            IsEditable="True"
-                            ItemsSource="{Binding Patients}"
-                            SelectedItem="{Binding PatientSelectedItem}"
-                            SelectedValuePath="Key"
-                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                        <ComboBox
-                            x:Name="DoctorNameComboBox"
-                            Width="350"
-                            Margin="0,8,0,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Doctor Name"
-                            DisplayMemberPath="Value"
-                            IsEditable="True"
-                            ItemsSource="{Binding Doctors}"
-                            SelectedItem="{Binding DoctorSelectedItem}"
-                            SelectedValuePath="Key"
-                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-                        <DatePicker
-                            x:Name="AppointmentDatePicker"
-                            Width="350"
-                            Margin="0,15,0,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Appointment Date"
-                            SelectedDate="{Binding Appointments.AppointmentDate}"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                        <materialDesign:TimePicker
-                            x:Name="AppointmentTimePicker"
-                            Width="350"
-                            Margin="0,15,0,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Appointment Time"
-                            SelectedTime="{Binding Appointments.AppointmentTime}"
-                            Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
-                        <TextBox
-                            x:Name="AppointmentDuration"
-                            Width="350"
-                            Margin="0,8,0,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Appointment Duration"
-                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding Appointments.Duration}" />
-
-                        <TextBox
-                            x:Name="AppointmentsBill"
-                            Width="350"
-                            Margin="0,8,0,0"
-                            HorizontalAlignment="Center"
-                            materialDesign:HintAssist.Hint="Appointment Bill"
-                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding Appointments.Bill}" />
-                        <TextBlock
-                            x:Name="validation"
-                            Style="{StaticResource ErrorMsg}"
-                            Text="{Binding Error}" />
-
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button
-                            Margin="0,8,8,0"
-                            Command="{Binding SaveCommand}"
-                            IsDefault="True"
-                            Style="{StaticResource MaterialDesignFlatButton}">
-                            SUBMIT
-                        </Button>
-                        <Button
-                            Margin="0,8,0,0"
-                            Command="materialDesign:DialogHost.CloseDialogCommand"
-                            IsCancel="True"
-                            Style="{StaticResource MaterialDesignFlatButton}">
-                            <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
-                            </Button.CommandParameter>
-                            CANCEL
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </Button.CommandParameter>
-        </Button>
     </Grid>
 </UserControl>

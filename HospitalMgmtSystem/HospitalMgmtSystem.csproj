@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppointmentsView.cs" />
     <Compile Include="DTOs\AppointmentsDto.cs" />
     <Compile Include="DTOs\ComboBoxPair.cs" />
     <Compile Include="DTOs\MedicalRecordsDTO.cs" />
@@ -140,6 +141,10 @@
     <Compile Include="Migrations\202204131933008_PatientMedicalRecords1.cs" />
     <Compile Include="Migrations\202204131933008_PatientMedicalRecords1.designer.cs">
       <DependentUpon>202204131933008_PatientMedicalRecords1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204181513072_bilal.cs" />
+    <Compile Include="Migrations\202204181513072_bilal.designer.cs">
+      <DependentUpon>202204181513072_bilal.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\PatientDiagnosis.cs" />
@@ -347,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204131933008_PatientMedicalRecords1.resx">
       <DependentUpon>202204131933008_PatientMedicalRecords1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204181513072_bilal.resx">
+      <DependentUpon>202204181513072_bilal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
