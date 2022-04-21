@@ -56,6 +56,12 @@
         <DataTemplate DataType="{x:Type viewmodels:ForgotPasswordViewModel}">
             <views:ForgotPasswordView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:AppointmentsDiaryViewModel}">
+            <views:AppointmentsDiary />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:LetterGeneratorViewModel}">
+            <views:LetterGeneratorView />
+        </DataTemplate>
     </Window.Resources>
     <materialDesign:DialogHost
         Name="RootDialog"
@@ -100,25 +106,19 @@
                         <ListViewItem MouseUp="goToAppointmentsView" Style="{StaticResource NavButton}">
                             Home Page
                         </ListViewItem>
-                        <ListViewItem
-                            MouseUp="goToPatientsView"
-                            Style="{StaticResource NavButton}"
-                            Visibility="{Binding IsAdmin}">
-                            Patients
+                        <ListViewItem MouseUp="goToPatientsView" Style="{StaticResource NavButton}">
+                            Patients Profiles
                         </ListViewItem>
-                        <ListViewItem                            
+                        <ListViewItem
                             MouseUp="goToAdminsView"
                             Style="{StaticResource NavButton}"
                             Visibility="{Binding IsAdmin}">
                             Admins
                         </ListViewItem>
-                        <ListViewItem                            
-                            MouseUp="goToAdminsView"
-                            Style="{StaticResource NavButton}"
-                            Visibility="{Binding IsAdmin}">
+                        <ListViewItem MouseUp="letterPrintOutPage" Style="{StaticResource NavButton}">
                             Letter Printouts
                         </ListViewItem>
-                        <ListViewItem MouseUp="goToAppointmentsView" Style="{StaticResource NavButton}">
+                        <ListViewItem MouseUp="goToAppointmentDiaryView" Style="{StaticResource NavButton}">
                             Appointments Diary
                         </ListViewItem>
                         <ListViewItem

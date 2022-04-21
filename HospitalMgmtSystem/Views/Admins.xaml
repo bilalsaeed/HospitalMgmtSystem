@@ -17,12 +17,13 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="20,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <TextBox
                     Grid.Column="0"
@@ -30,9 +31,8 @@
                     Margin="8,0,0,0"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="Type to search"
-                    materialDesign:HintAssist.HintOpacity="0.4"
                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                    BorderThickness="0"
+                    BorderThickness="2"
                     Foreground="{StaticResource DarkText}"
                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
@@ -41,9 +41,23 @@
                 </TextBox>
                 <Button
                     Grid.Column="1"
+                    Margin="10,0,0,0"
                     Command="{Binding SearchAction}"
-                    Style="{DynamicResource MaterialDesignToolButton}">
-                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                    Style="{DynamicResource MaterialDesignFlatAccentBgButton}">
+                    Search
+                </Button>
+                <Button
+                    Grid.Column="2"
+                    Margin="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                    Background="{StaticResource PrimaryColor}"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding AddPatientModalCommand}"
+                    Style="{StaticResource MaterialDesignFlatAccentBgButton}">
+                    Add Admin
                 </Button>
             </Grid>
         </Grid>
@@ -83,8 +97,8 @@
                                         Kind="User" />
                                     <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
                                     <TextBlock
-                                        Grid.Row="2"
-                                        Margin="16,0,16,8"
+                                        Grid.Row="1"
+                                        Margin="10,-20,16,8"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource MaterialDesignBody2TextBlock}">
@@ -94,30 +108,29 @@
                                     <StackPanel
                                         Grid.Row="2"
                                         Margin="16,0,16,8"
-                                        HorizontalAlignment="Right"
+                                        HorizontalAlignment="Center"
                                         Orientation="Horizontal">
                                         <Button
-                                            Width="30"
+                                            Width="80"
                                             Padding="2,0,2,0"
                                             HorizontalAlignment="Right"
                                             materialDesign:RippleAssist.IsCentered="True"
                                             Command="{Binding Path=DataContext.EditAdminCommand, ElementName=AdminsList}"
                                             CommandParameter="{Binding}"
-                                            Style="{StaticResource MaterialDesignToolForegroundButton}">
-                                            <materialDesign:PackIcon Kind="Edit" />
-
+                                            Style="{StaticResource MaterialDesignFlatMidBgButton}">
+                                            Edit
                                         </Button>
                                         <Button
-                                            Width="30"
+                                            Width="80"
                                             Margin="5,0,0,0"
                                             Padding="2,0,2,0"
                                             HorizontalAlignment="Left"
                                             Command="{Binding Path=DataContext.DeleteAdminCommand, ElementName=AdminsList}"
                                             CommandParameter="{Binding}"
                                             IsCancel="True"
-                                            Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                            Style="{StaticResource MaterialDesignFlatMidBgButton}">
                                             <Button.Content>
-                                                <materialDesign:PackIcon Kind="Delete" />
+                                                Delete
                                             </Button.Content>
                                         </Button>
                                     </StackPanel>
@@ -137,18 +150,5 @@
                 </ItemsControl>
             </Grid>
         </ScrollViewer>
-        <Button
-            Grid.Row="1"
-            Margin="0,0,35,20"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            materialDesign:ShadowAssist.ShadowDepth="Depth1"
-            Background="{StaticResource PrimaryColor}"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            Command="{Binding AddPatientModalCommand}"
-            Style="{StaticResource MaterialDesignFloatingActionButton}">
-            <materialDesign:PackIcon Kind="Plus" />
-        </Button>
     </Grid>
 </UserControl>

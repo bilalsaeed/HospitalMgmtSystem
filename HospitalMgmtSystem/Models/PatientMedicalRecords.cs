@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalMgmtSystem.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,6 @@ namespace HospitalMgmtSystem.Models
         public Guid Id { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
-        public User Doctor { get; set; }
-        public int? DoctorId { get; set; }
         public User Patient { get; set; }
         public int? PatientId { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
@@ -21,5 +20,6 @@ namespace HospitalMgmtSystem.Models
         public int? LastAccessedById { get; set; }
         public User CreatedBy { get; set; }
         public int? CreatedById { get; set; }
+        public MedicalRecordType? RecordType { get; set; }
     }
 }

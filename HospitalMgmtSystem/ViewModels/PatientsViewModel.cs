@@ -29,7 +29,7 @@ namespace HospitalMgmtSystem.ViewModels
         public ICommand SavePatientsButton { get; set; }
         public ICommand SearchAction { get; set; }
         public ICommand CloseAddPatientModal { get; set; }
-        public ICommand GoToPatientsDetails { get; set; }
+        public ICommand GoToPatientProfile { get; set; }
         public ICommand DeletePatientCommand { get; set; }
         public ICommand EditPatientCommand { get; set; }
 
@@ -64,9 +64,10 @@ namespace HospitalMgmtSystem.ViewModels
                 this.ErrorMessage = string.Empty;
             });
 
-            GoToPatientsDetails = new RelayCommand(obj =>
+            GoToPatientProfile = new RelayCommand(obj =>
             {
-                Console.Out.WriteLine(obj);
+                var patient = obj as User;
+                this._navigationStore.CurrentViewModel = new PrescriptionViewModel(patient.Id);
             });
 
             DeletePatientCommand = new RelayCommand(obj =>

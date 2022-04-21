@@ -13,4 +13,14 @@ namespace HospitalMgmtSystem.DTOs
         public DateTime AddedAt { get; set; } = DateTime.UtcNow;
         public string DoctorName { get; set; }
     }
+
+    public class PrescriptionsDTO
+    {
+        public int Id { get; set; }
+        public string Medicine { get; set; }
+        public string Dosage { get; set; }
+        public string Quantity { get; set; }
+        public string AddedBy { get; set; }      
+        public string AddedAt { get; set; } 
+    }
 }

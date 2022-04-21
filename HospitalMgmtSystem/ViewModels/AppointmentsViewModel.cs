@@ -40,6 +40,12 @@ namespace HospitalMgmtSystem.ViewModels
 
         public AppointmentsViewModel()
         {
+            NavigationStore.Instance.NonAuthenticatedViews = Visibility.Collapsed;
+            NavigationStore.Instance.AuthenticatedViews = Visibility.Visible;
+            if (UserStore.User.UserType == UserTypeEnum.Admin)
+                NavigationStore.Instance.IsAdmin = Visibility.Visible;
+            else
+                NavigationStore.Instance.IsAdmin = Visibility.Collapsed;
             Patients = new ObservableCollection<ComboBoxPair>();
             Doctors = new ObservableCollection<ComboBoxPair>();
             foreach (var patient in db.User.Where(a => a.UserType == UserTypeEnum.Patient).ToList())
@@ -58,8 +64,8 @@ namespace HospitalMgmtSystem.ViewModels
 
             NavigateToDetailsAction = new RelayCommand(obj =>
             {
-                var appointment = obj as AppointmentsDto;
-                NavigationStore.Instance.CurrentViewModel = new PrescriptionViewModel(appointment);
+                //var appointment = obj as AppointmentsDto;
+                //NavigationStore.Instance.CurrentViewModel = new PrescriptionViewModel(appointment);
             });
 
             deleteAppointment = new RelayCommand(obj =>
@@ -106,9 +112,11 @@ namespace HospitalMgmtSystem.ViewModels
                             join d in db.User.ToList() on a.DoctorId equals d.Id
                             join p in db.User.ToList() on a.PatientId equals p.Id
 
-                            where string.IsNullOrEmpty(query) ||
+                            where (string.IsNullOrEmpty(query) ||
                             (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
-                            (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1)
+                            (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1))
+
+                            && a.AppointmentDate.ToString("d") == DateTime.Now.ToString("d")
 
                             select new AppointmentsDto()
                             {
@@ -133,6 +141,8 @@ namespace HospitalMgmtSystem.ViewModels
                             (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
                             (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1))
 
+                            && a.AppointmentDate.ToString("d") == DateTime.Now.ToString("d")
+
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
@@ -156,6 +166,8 @@ namespace HospitalMgmtSystem.ViewModels
                             (!string.IsNullOrEmpty(query) && $"{d.FirstName + d.LastName}".ToLower().IndexOf(query.ToLower()) > -1) ||
                             (!string.IsNullOrEmpty(query) && $"{p.FirstName + p.LastName}".ToLower().IndexOf(query.ToLower()) > -1))
 
+                            && a.AppointmentDate.ToString("d") == DateTime.Now.ToString("d")
+
                             select new AppointmentsDto()
                             {
                                 Id = a.Id,
@@ -172,8 +184,9 @@ namespace HospitalMgmtSystem.ViewModels
             }
 
             var doctors = list.Select(a => a.DoctorName).Distinct();
+            AllAppointments = new ObservableCollection<AppointmentsView>();
 
-            foreach(var doc in doctors)
+            foreach (var doc in doctors)
             {
                 var appointmentView = new AppointmentsView();
                 appointmentView.DoctorName = doc;

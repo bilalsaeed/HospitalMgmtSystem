@@ -51,5 +51,15 @@ namespace HospitalMgmtSystem
         {
             _navigationStore.CurrentViewModel = new ChangePasswordViewModel();
         }
+
+        private void goToAppointmentDiaryView(object sender, MouseButtonEventArgs e)
+        {
+            _navigationStore.CurrentViewModel = new AppointmentsDiaryViewModel();
+        }
+
+        private void letterPrintOutPage(object sender, MouseButtonEventArgs e)
+        {
+            _navigationStore.CurrentViewModel = new LetterGeneratorViewModel();
+        }
     }
 }

@@ -125,7 +125,7 @@ namespace HospitalMgmtSystem.ViewModels
                             await Task.Delay(1000);
                         }
                         UserStore.User = user;
-                        this.navigationStore.CurrentViewModel = new DashboardViewModel(this.navigationStore);
+                        this.navigationStore.CurrentViewModel = new AppointmentsViewModel();
                     });
                 }
             }

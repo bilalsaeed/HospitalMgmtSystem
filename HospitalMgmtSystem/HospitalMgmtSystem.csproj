@@ -38,11 +38,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=2.0.5.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.2.0.5\lib\net452\MaterialDesignColors.dll</HintPath>
@@ -53,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,10 +80,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppointmentsView.cs" />
+    <Compile Include="Attributes\ColumnNameAttribute.cs" />
     <Compile Include="DTOs\AppointmentsDto.cs" />
     <Compile Include="DTOs\ComboBoxPair.cs" />
     <Compile Include="DTOs\MedicalRecordsDTO.cs" />
     <Compile Include="DTOs\PatientDiagnosesDTO.cs" />
+    <Compile Include="Enums\MedicalRecordType.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Migrations\202204061037122_userModel.cs" />
     <Compile Include="Migrations\202204061037122_userModel.designer.cs">
@@ -146,12 +155,34 @@
     <Compile Include="Migrations\202204181513072_bilal.designer.cs">
       <DependentUpon>202204181513072_bilal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204191343035_ineedabreaknow.cs" />
+    <Compile Include="Migrations\202204191343035_ineedabreaknow.designer.cs">
+      <DependentUpon>202204191343035_ineedabreaknow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204191559074_helloworld.cs" />
+    <Compile Include="Migrations\202204191559074_helloworld.designer.cs">
+      <DependentUpon>202204191559074_helloworld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204211814239_prescriptionsModel.cs" />
+    <Compile Include="Migrations\202204211814239_prescriptionsModel.designer.cs">
+      <DependentUpon>202204211814239_prescriptionsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204211842493_somemodelchanges.cs" />
+    <Compile Include="Migrations\202204211842493_somemodelchanges.designer.cs">
+      <DependentUpon>202204211842493_somemodelchanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204211911134_hellotesting123.cs" />
+    <Compile Include="Migrations\202204211911134_hellotesting123.designer.cs">
+      <DependentUpon>202204211911134_hellotesting123.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\PatientDiagnosis.cs" />
     <Compile Include="Models\PatientMedicalRecords.cs" />
     <Compile Include="Models\PatientProfile.cs" />
+    <Compile Include="Models\Prescriptions.cs" />
     <Compile Include="Store\UserStore.cs" />
     <Compile Include="ViewModels\AccessCodeViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentsDiaryViewModel.cs" />
     <Compile Include="ViewModels\AppointmentsViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\DoctorsModalViewModal.cs" />
@@ -162,6 +193,7 @@
     <Compile Include="ViewModels\AddEditAdminViewModel.cs" />
     <Compile Include="ViewModels\EditPatientViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="ViewModels\LetterGeneratorViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationStore.cs" />
     <Compile Include="ViewModels\PatientsViewModel.cs" />
@@ -174,6 +206,9 @@
     </Compile>
     <Compile Include="Views\Admins.xaml.cs">
       <DependentUpon>Admins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppointmentsDiary.xaml.cs">
+      <DependentUpon>AppointmentsDiary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AppointmentsView.xaml.cs">
       <DependentUpon>AppointmentsView.xaml</DependentUpon>
@@ -202,6 +237,9 @@
     <Compile Include="Views\ForgotPasswordView.xaml.cs">
       <DependentUpon>ForgotPasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LetterGeneratorView.xaml.cs">
+      <DependentUpon>LetterGeneratorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Patients.xaml.cs">
       <DependentUpon>Patients.xaml</DependentUpon>
     </Compile>
@@ -219,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Admins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppointmentsDiary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ForgotPasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LetterGeneratorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -355,6 +401,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204181513072_bilal.resx">
       <DependentUpon>202204181513072_bilal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204191343035_ineedabreaknow.resx">
+      <DependentUpon>202204191343035_ineedabreaknow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204191559074_helloworld.resx">
+      <DependentUpon>202204191559074_helloworld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204211814239_prescriptionsModel.resx">
+      <DependentUpon>202204211814239_prescriptionsModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204211842493_somemodelchanges.resx">
+      <DependentUpon>202204211842493_somemodelchanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204211911134_hellotesting123.resx">
+      <DependentUpon>202204211911134_hellotesting123.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

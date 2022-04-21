@@ -15,5 +15,6 @@ namespace HospitalMgmtSystem.DBContext
         public DbSet<Appointments> Appointments { get; set; }
         public DbSet<PatientDiagnosis> PatientDiagnosis { get; set; }
         public DbSet<PatientMedicalRecords> PatientMedicalRecords { get; set; }
+        public DbSet<Prescriptions> Prescriptions { get; set; }
     }
 }
