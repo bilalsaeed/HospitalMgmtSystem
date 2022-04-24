@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -252,12 +251,6 @@ namespace HospitalMgmtSystem.ViewModels
             doc.Close();
 
             PrintDialog printDialog1 = new PrintDialog();
-            
-            PrintDocument printDoc = new PrintDocument();
-            printDoc.DocumentName = "Print Document";
-            printDialog1.Document = printDoc;
-            printDialog1.AllowSelection = true;
-            printDialog1.AllowSomePages = true;
             if (printDialog1.ShowDialog() == DialogResult.OK)
             {
                 Process p = new Process();

@@ -175,11 +175,16 @@
     <Compile Include="Migrations\202204211911134_hellotesting123.designer.cs">
       <DependentUpon>202204211911134_hellotesting123.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204241038318_testtablecreation.cs" />
+    <Compile Include="Migrations\202204241038318_testtablecreation.designer.cs">
+      <DependentUpon>202204241038318_testtablecreation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\PatientDiagnosis.cs" />
     <Compile Include="Models\PatientMedicalRecords.cs" />
     <Compile Include="Models\PatientProfile.cs" />
     <Compile Include="Models\Prescriptions.cs" />
+    <Compile Include="Models\TestTable.cs" />
     <Compile Include="Store\UserStore.cs" />
     <Compile Include="ViewModels\AccessCodeViewModel.cs" />
     <Compile Include="ViewModels\AppointmentsDiaryViewModel.cs" />
@@ -416,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204211911134_hellotesting123.resx">
       <DependentUpon>202204211911134_hellotesting123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204241038318_testtablecreation.resx">
+      <DependentUpon>202204241038318_testtablecreation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

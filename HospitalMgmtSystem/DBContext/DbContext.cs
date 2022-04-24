@@ -16,5 +16,7 @@ namespace HospitalMgmtSystem.DBContext
         public DbSet<PatientDiagnosis> PatientDiagnosis { get; set; }
         public DbSet<PatientMedicalRecords> PatientMedicalRecords { get; set; }
         public DbSet<Prescriptions> Prescriptions { get; set; }
+
+        public DbSet<TestTable> TestTable { get; set; }
     }
 }

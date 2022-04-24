@@ -101,6 +101,11 @@ namespace HospitalMgmtSystem.ViewModels
 
             try
             {
+                var alreadyExists = db.User.Where(a => a.UserName == User.UserName).FirstOrDefault();
+
+                if (alreadyExists != null)
+                    throw new Exception("User already exists!");
+
                 User.Password = password;
                 User.UserType = _userTypeEnum;
                 db.User.Add(User);
